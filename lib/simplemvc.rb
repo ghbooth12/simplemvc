@@ -1,13 +1,14 @@
 require "simplemvc/version"
 require "simplemvc/controller"
 require "simplemvc/utils"
+require "simplemvc/dependencies"
 
 module Simplemvc
   class Application
     def call(env)
       if env["PATH_INFO"] == "/"
         # 302 is redirect status.
-        return [ 302, { "Location" => "/pages/about" }, [] ]
+        return [ 302, { "Location" => "/my_pages/about" }, [] ]
       end
       if env["PATH_INFO"] == "/favicon.ico"
         return [ 500, {}, [] ]

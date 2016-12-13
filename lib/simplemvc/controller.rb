@@ -3,7 +3,6 @@ require 'erubis'
 module Simplemvc
   class Controller
     def render(view_name, locals = {})
-      puts ">>> render\nview_name: #{view_name}, locals: #{locals}"
       filename = File.join("app", "views", controller_name, "#{view_name}.erb")
       template = File.read(filename)
       Erubis::Eruby.new(template).result(locals)
