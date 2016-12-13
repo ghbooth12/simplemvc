@@ -1,4 +1,6 @@
 require "simplemvc/version"
+require "simplemvc/controller"
+require "simplemvc/utils"
 
 module Simplemvc
   class Application
@@ -22,7 +24,7 @@ module Simplemvc
       # "/pages/about".split("/") = ["", "pages", "about"]
       _, controller_name, action = env["PATH_INFO"].split("/") # _ is a dump variable.
       # We need a controller constant, not a string.
-      controller_name = controller_name.capitalize + "Controller" # Still it's a string.
+      controller_name = controller_name.to_camel_case + "Controller" # Still it's a string.
       # We can't use "PagesController" string to instantiate. So we need Constant.
       # const_get finds Constant and return it by given string.
       [ Object.const_get(controller_name), action ]
