@@ -29,7 +29,17 @@ module Simplemvc
     def render_template(view_name, locals = {})
       filename = File.join("app", "views", controller_name, "#{view_name}.erb")
       template = File.read(filename)
-      Erubis::Eruby.new(template).result(locals)  # returns string
+
+      vars = {}  # { name: "Foo Bar" }
+      instance_variables.each do |var| # Person.new.instance_variables => [:@name, :@age]
+        # var = :@name
+        key = var.to_s.gsub("@", "").to_sym  # :@name.to_s => "@name"
+        vars[key] = instance_variable_get(var)
+        # Person.new.instance_variable_get(:@name) => "Apple"
+      end
+
+      # locals = { name: "Apple", age: "20" } This hash is from pages_controller.rb
+      Erubis::Eruby.new(template).result(locals.merge(vars))  # returns string
       # Erubis::Eruby.new("Hello, <%= name %>").result(name: "Gahee")
       # => "Hello, Gahee"
     end

@@ -22,7 +22,10 @@ module Simplemvc
       if controller.get_response  # If the response is formed
         controller.get_response  # get_response returns @reponse from Controller.
       else
-        [ 200, { "Content-Type" => "text/html" }, [ response ] ]
+        # If method in pages_controller.rb returns nil, just render action manually here.
+        controller.render(action)
+        controller.get_response
+        # [ 200, { "Content-Type" => "text/html" }, [ response ] ]
       end
     end
 
