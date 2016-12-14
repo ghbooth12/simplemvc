@@ -47,5 +47,25 @@ module Simplemvc
     def controller_name
       self.class.to_s.gsub(/Controller$/, "").to_snake_case
     end
+
+    def dispatch(action)
+      # content = self.send(action)  # I think no need to assign to content.
+      self.send(action)
+
+      if get_response  # If the response is formed
+        get_response  # get_response returns @reponse from Controller.
+      else
+        # If method in pages_controller.rb returns nil, just render action manually here.
+        render(action)
+        get_response
+        # [ 200, { "Content-Type" => "text/html" }, [ response ] ]
+      end
+    end
+
+    def self.action(action_name)
+      -> (env) { self.new(env).dispatch(action_name) }
+      # dispatch sends action message to the controller.
+      # This gets Rack response. This is used in blog's config.ru, inside map.
+    end
   end
 end

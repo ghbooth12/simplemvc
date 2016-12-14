@@ -19,14 +19,15 @@ module Simplemvc
       controller = controller_class.new(env) # PagesController's instance
       response = controller.send(action) # action is a string. This will trigger method in pages_controller.rb
 
-      if controller.get_response  # If the response is formed
-        controller.get_response  # get_response returns @reponse from Controller.
-      else
-        # If method in pages_controller.rb returns nil, just render action manually here.
-        controller.render(action)
-        controller.get_response
-        # [ 200, { "Content-Type" => "text/html" }, [ response ] ]
-      end
+      # >> Move to dispatch in Controller.clss
+      # if controller.get_response  # If the response is formed
+      #   controller.get_response  # get_response returns @reponse from Controller.
+      # else
+      #   # If method in pages_controller.rb returns nil, just render action manually here.
+      #   controller.render(action)
+      #   controller.get_response
+      #   # [ 200, { "Content-Type" => "text/html" }, [ response ] ]
+      # end
     end
 
     def get_controller_and_action(env)
