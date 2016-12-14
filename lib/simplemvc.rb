@@ -16,9 +16,14 @@ module Simplemvc
 
       # env["PATH_INFO"] = "/pages/about" --> PagesController.send(:about)
       controller_class, action = get_controller_and_action(env)
-      response = controller_class.new(env).send(action) # action is a string.
+      controller = controller_class.new(env) # PagesController's instance
+      response = controller.send(action) # action is a string. This will trigger method in pages_controller.rb
 
-      [ 200, { "Content-Type" => "text/html" }, [ response ] ]
+      if controller.get_response  # If the response is formed
+        controller.get_response  # get_response returns @reponse from Controller.
+      else
+        [ 200, { "Content-Type" => "text/html" }, [ response ] ]
+      end
     end
 
     def get_controller_and_action(env)
