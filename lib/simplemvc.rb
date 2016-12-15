@@ -3,6 +3,7 @@ require "simplemvc/controller"
 require "simplemvc/utils"
 require "simplemvc/dependencies"
 require "simplemvc/routing"
+require "simplemvc/mapper"
 
 module Simplemvc
   class Application
